@@ -1,4 +1,3 @@
-const config = require('config');
 const jwt = require('jsonwebtoken');
 
 function auth(req, res, next) {
@@ -6,11 +5,11 @@ function auth(req, res, next) {
 
   // Check for token
   if (!token)
-    return res.status(401).json({ msg: 'No token, authorizaton denied' });
+    return res.status(401).json({ msg: 'Authorizaton denied' });
 
   try {
     // Verify token
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    const decoded = jwt.verify(token, process.env.jwtSecret);
     // Add user from payload
     req.user = decoded;
     next();
